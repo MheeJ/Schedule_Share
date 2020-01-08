@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:textSize="25dp"
+            android:text="회원가입" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/person_0"
+                android:layout_width="53dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_person_black_24dp" />
+            <EditText
+                android:id="@+id/edit_id"
+                android:layout_width="304dp"
+                android:layout_height="46dp"
+                android:ems="10"
+                android:hint="아이디"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/person_3"
+                android:layout_width="53dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_person_black_24dp" />
+            <EditText
+                android:id="@+id/edit_pw"
+                android:layout_width="304dp"
+                android:layout_height="46dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:maxLength="10"
+                android:hint="비밀번호"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/person_1"
+                android:layout_width="53dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_person_black_24dp" />
+
+            <EditText
+                android:id="@+id/edit_name"
+                android:layout_width="304dp"
+                android:layout_height="46dp"
+                android:layout_alignBaseline="@+id/text_name"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:maxLength="10"
+                android:hint="이름"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/birthday_1"
+                android:layout_width="53dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_card_giftcard_black_24dp" />
+
+            <EditText
+                android:id="@+id/edit_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/text_age"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:maxLength="10"
+                android:hint="나이"/>
+            <Button
+                android:id="@+id/cdate"
+                android:layout_width="91dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="달력" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/gender"
+                android:layout_width="53dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_wc_black_24dp"
+                />
+            <TextView
+                android:layout_width="53dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="5dp"
+                android:text="성별"
+                android:textSize="18dp"
+                />
+            <CheckBox
+                android:id="@+id/check_man"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Man"
+                android:textSize="15dp" />
+
+            <CheckBox
+                android:id="@+id/check_woman"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="Woman"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_insert"
+                android:layout_width="421dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:background="#AFEEEE"
+                android:text="회원가입" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

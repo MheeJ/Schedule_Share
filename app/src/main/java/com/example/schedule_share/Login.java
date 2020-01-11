@@ -5,8 +5,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,6 +24,9 @@ public class Login extends AppCompatActivity {
     //데이터베이스에서 관심 등록 했는지 검사후, 관심 등록 데이터 베이스에 업데이트 하기
 
 
+  private FirebaseAuth mAuth;
+    private static final String TAG = "LoginActivity";
+
 
     String getID, getPW;
     @Override
@@ -26,7 +35,10 @@ public class Login extends AppCompatActivity {
 
         getID = getIntent().getStringExtra("userID");
         getPW = getIntent().getStringExtra("userPW");
-        getdatapu();
+
+        mAuth = FirebaseAuth.getInstance();
+
+       // getdatapu();
 
        // initView();
 
@@ -34,7 +46,31 @@ public class Login extends AppCompatActivity {
 
     }
 
+ /*   public void LoginActivity(){
+        String email = getID;
+        String password = getPW;
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            updateUI(null);
+                        }
 
+                        // ...
+                    }
+                });
+
+    }*/
+/*
+//실시간 데이터 베이스 에서 데이터 확인 후 로그인 하는부분
     public void getdatapu() {
         // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -54,7 +90,7 @@ public class Login extends AppCompatActivity {
                             if(strpw.equals(getPW)) {
                                 Intent intent = new Intent(Login.this, Schedule_list.class);
                                 startActivity(intent);
-                                /*startActivity(new Intent(Login.this, Schedule_list.class));*/
+                                *//*startActivity(new Intent(Login.this, Schedule_list.class));*//*
                                 Toast.makeText(Login.this, "로그인 성공", Toast.LENGTH_LONG).show();
                                 finish();
                             }
@@ -77,7 +113,7 @@ public class Login extends AppCompatActivity {
                 Log.w("TAG: ", "Failed to read value", databaseError.toException());
             }
         });
-    }
+    }*/
 
 
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -29,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
@@ -36,26 +38,19 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
     private FirebaseUser current;
     private static final String TAG = "EmailPassword";
-
-    Button btn_Update;
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55]*$");
     Button btn_Insert;
-    Button btn_Select;
     EditText edit_ID;
     EditText edit_PW;
+    EditText PW_Check;
     EditText edit_Name;
     EditText edit_Age;
-    TextView text_ID;
-    TextView text_Name;
-    TextView text_Age;
-    TextView text_Gender;
     CheckBox check_Man;
     CheckBox check_Woman;
-    CheckBox check_ID;
-    CheckBox check_Name;
-    CheckBox check_Age;
 
     String ID;
     String PW;
+    String checkPW;
     String name;
     long age;
     String gender = "";
@@ -71,12 +66,16 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        initObject();
+        mAuth = FirebaseAuth.getInstance();
+    }
 
-
+    public void initObject(){
         btn_Insert = (Button) findViewById(R.id.btn_insert);
         btn_Insert.setOnClickListener(this);
         edit_ID = (EditText) findViewById(R.id.edit_id);
         edit_PW = (EditText) findViewById(R.id.edit_pw);
+        PW_Check = (EditText)findViewById(R.id.pw_check);
         edit_Name = (EditText) findViewById(R.id.edit_name);
         edit_Age = (EditText) findViewById(R.id.edit_age);
         check_Man = (CheckBox) findViewById(R.id.check_man);
@@ -85,8 +84,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         check_Woman.setOnClickListener(this);
         btn_Insert.setEnabled(true);
         edit_PW.setTransformationMethod(PasswordTransformationMethod.getInstance());
-
-        mAuth = FirebaseAuth.getInstance();
     }
 
     public void setInsertMode() {
@@ -138,35 +135,64 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
+
+
     private void createAccount() {
         // [START create_user_with_email]
         ID = edit_ID.getText().toString().trim();
         PW = edit_PW.getText().toString().trim();
+        checkPW = PW_Check.getText().toString().trim();
         name = edit_Name.getText().toString();
         age = Long.parseLong(edit_Age.getText().toString());
 
         String email = ID;
         String password = PW;
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-
-                        }
-                    }
-                });
-        // [END create_user_with_email]
+        if (email.length() > 0 && password.length() > 0 && checkPW.length() > 0 && name.length() > 0 ) {
+            if (PW.equals(checkPW)) {
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    createDatabase();
+                                    startToast("회원가입에 성공하였습니다.");
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    if (task.getException() != null) {
+                                        startToast("회원가입에 실패하였습니다.");
+                                    }
+                                }
+                            }
+                        });
+            } else {
+                startToast("비밀번호가 일치하지 않습니다.");
+            }
+        }else {
+            startToast("회원정보를 입력하세요");
+        }
     }
+
+    private void startToast(String msg){
+        Toast.makeText(SignUp.this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public void createDatabase(){
+        if (!IsExistID()) {
+            postFirebaseDatabase(true);
+            setInsertMode();
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Toast.makeText(SignUp.this, "이미 존재하는 ID 입니다. 다른 ID로 설정해주세요.", Toast.LENGTH_LONG).show();
+        }
+        edit_ID.requestFocus();
+        edit_ID.setCursorVisible(true);
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -177,17 +203,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                 name = edit_Name.getText().toString();
                 age = Long.parseLong(edit_Age.getText().toString());*/
                 createAccount();
-                if (!IsExistID()) {
-                    postFirebaseDatabase(true);
-                    setInsertMode();
-                    Intent intent = new Intent(this,MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Toast.makeText(SignUp.this, "이미 존재하는 ID 입니다. 다른 ID로 설정해주세요.", Toast.LENGTH_LONG).show();
-                }
-                edit_ID.requestFocus();
-                edit_ID.setCursorVisible(true);
+
                 break;
 
 

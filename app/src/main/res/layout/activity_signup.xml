@@ -56,10 +56,30 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:maxLength="10"
-                android:hint="비밀번호"/>
+                android:hint="비밀번호(9자리 이상)"/>
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal">
 
+            <ImageView
+                android:id="@+id/person_4"
+                android:layout_width="53dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_person_black_24dp" />
+            <EditText
+                android:id="@+id/pw_check"
+                android:layout_width="304dp"
+                android:layout_height="46dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:maxLength="10"
+                android:hint="비밀번호 확인"/>
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="58dp"
@@ -158,7 +178,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
                 android:layout_marginRight="12dp"
-                android:background="#AFEEEE"
                 android:text="회원가입" />
 
         </LinearLayout>

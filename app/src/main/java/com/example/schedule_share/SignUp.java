@@ -2,6 +2,7 @@ package com.example.schedule_share;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +33,9 @@ import java.util.Map;
 public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     private DatabaseReference mPostReference;
-    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth mAuth;
+    private FirebaseUser current;
+    private static final String TAG = "EmailPassword";
 
     Button btn_Update;
     Button btn_Insert;
@@ -67,7 +71,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+
+
         btn_Insert = (Button) findViewById(R.id.btn_insert);
         btn_Insert.setOnClickListener(this);
         edit_ID = (EditText) findViewById(R.id.edit_id);
@@ -79,7 +84,9 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         check_Woman = (CheckBox) findViewById(R.id.check_woman);
         check_Woman.setOnClickListener(this);
         btn_Insert.setEnabled(true);
+        edit_PW.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
+        mAuth = FirebaseAuth.getInstance();
     }
 
     public void setInsertMode() {
@@ -125,34 +132,51 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         return text;
     }*/
 
-/*
-    // 회원가입
-    private void createUser(String email, String password) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
+
+    public void onStrart(){
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+    }
+
+    private void createAccount() {
+        // [START create_user_with_email]
+        ID = edit_ID.getText().toString().trim();
+        PW = edit_PW.getText().toString().trim();
+        name = edit_Name.getText().toString();
+        age = Long.parseLong(edit_Age.getText().toString());
+
+        String email = ID;
+        String password = PW;
+
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // 회원가입 성공
-                            Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_LONG).show();
+                            // Sign in success, update UI with the signed-in user's information
+
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+
                         } else {
-                            // 회원가입 실패
-                            Toast.makeText(getApplicationContext(), "회원가입 실패", Toast.LENGTH_LONG).show();
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+
                         }
                     }
                 });
+        // [END create_user_with_email]
     }
-*/
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_insert:
-                ID = edit_ID.getText().toString();
-                PW = edit_PW.getText().toString();
+                /*ID = edit_ID.getText().toString().trim();
+                PW = edit_PW.getText().toString().trim();
                 name = edit_Name.getText().toString();
-                age = Long.parseLong(edit_Age.getText().toString());
-               // createUser(ID,PW);
+                age = Long.parseLong(edit_Age.getText().toString());*/
+                createAccount();
                 if (!IsExistID()) {
                     postFirebaseDatabase(true);
                     setInsertMode();
@@ -185,4 +209,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
         }
     }
+
+
 }

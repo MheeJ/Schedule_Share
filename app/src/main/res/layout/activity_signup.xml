@@ -93,7 +93,7 @@
 
             <EditText
                 android:id="@+id/edit_name"
-                android:layout_width="214dp"
+                android:layout_width="216dp"
                 android:layout_height="46dp"
                 android:layout_alignBaseline="@+id/text_name"
                 android:ems="10"
@@ -120,20 +120,18 @@
                 android:src="@drawable/ic_card_giftcard_black_24dp" />
 
             <EditText
-                android:id="@+id/edit_age"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/text_age"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:maxLength="10"
-                android:hint="나이"/>
+                android:id="@+id/birthday"
+                android:layout_width="216dp"
+                android:layout_height="44dp"
+                android:layout_marginLeft="10dp"
+                android:hint="생년월일" />
+
             <Button
-                android:id="@+id/cdate"
+                android:id="@+id/btn_birth"
                 android:layout_width="91dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="달력" />
+                android:text="DatePickerDialog"/>
         </LinearLayout>
 
 

@@ -1,5 +1,6 @@
 package com.example.schedule_share;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,15 +42,18 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser current;
     private static final String TAG = "EmailPassword";
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55]*$");
+    private DatePickerDialog.OnDateSetListener callbackMethod;
 
-    Button btn_Insert,Check_Name;
+    Button btn_Insert,Check_Name,Btn_Birth;
+    TextView birthday;
     EditText edit_ID;
     EditText edit_PW;
-    EditText PW_Check;
+    EditText PW_Check, mETBirthday;
     EditText edit_Name;
     EditText edit_Age;
     CheckBox check_Man;
     CheckBox check_Woman;
+   // private TextView birthday;
     int count;
     String strname;
     String ID;
@@ -56,6 +61,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     String checkPW;
     String name;
     String log_name="No";
+    String BIRTHDAY;
     long age;
     String gender = "";
     String sort = "id";
@@ -70,8 +76,12 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+
         initObject();
         mAuth = FirebaseAuth.getInstance();
+
+        InitializeListener();
+        InitializeView();
     }
 
     public void initObject(){
@@ -79,17 +89,20 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         btn_Insert.setOnClickListener(this);
         Check_Name = (Button) findViewById(R.id.check_name);
         Check_Name.setOnClickListener(this);
+        Btn_Birth = (Button)findViewById(R.id.btn_birth);
+        Btn_Birth.setOnClickListener(this);
         edit_ID = (EditText) findViewById(R.id.edit_id);
         edit_PW = (EditText) findViewById(R.id.edit_pw);
         PW_Check = (EditText)findViewById(R.id.pw_check);
         edit_Name = (EditText) findViewById(R.id.edit_name);
-        edit_Age = (EditText) findViewById(R.id.edit_age);
+        mETBirthday = (EditText) findViewById(R.id.birthday);
         check_Man = (CheckBox) findViewById(R.id.check_man);
         check_Man.setOnClickListener(this);
         check_Woman = (CheckBox) findViewById(R.id.check_woman);
         check_Woman.setOnClickListener(this);
         btn_Insert.setEnabled(true);
         edit_PW.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        PW_Check.setTransformationMethod(PasswordTransformationMethod.getInstance());
     }
 
     public void setInsertMode() {
@@ -103,15 +116,26 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    //생일선택달력
+    private void InitializeListener() {
+        callbackMethod = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                monthOfYear = monthOfYear+1;
+                mETBirthday.setText(year + "년"+monthOfYear+"월"+dayOfMonth+"일");
+            }
+        };
+    }
 
-    public boolean IsExistID() {
+    private void InitializeView() {
+        birthday = (TextView)findViewById(R.id.birthday);
+    }
+
+ /*   public boolean IsExistID() {
         boolean IsExist = arrayIndex.contains(name);
         return IsExist;
-    }
+    }*/
 
-    private void startData(){
-        getdata();
-    }
 
     public void getdata() {
         // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
@@ -123,19 +147,12 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                 // 클래스 모델이 필요?
                 for (DataSnapshot fileSnapshot : dataSnapshot.getChildren()) {
                     String strname = (String) fileSnapshot.child("name").getValue();
-
                     Log.v("TAG: value is ", strname);
-
-
-                   if(strname.equals(name)){
+                    if(strname.equals(name)){
                        startToast("동일한 이름이 있습니다.");
                        log_name = "No";
                    }
                 }
-
-                /*postFirebaseDatabase(true);
-                createAccount();
-                finish();*/
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -149,7 +166,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
         if (add) {
-            FirebasePost post = new FirebasePost(ID, PW, name, age, gender);
+            FirebasePost post = new FirebasePost(ID, PW, name, BIRTHDAY, gender);
             postValues = post.toMap();
         }
         childUpdates.put("Schedule_Share"+"/id_list/" + name, postValues);
@@ -177,8 +194,9 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         // [START create_user_with_email]
         String email = ID;
         String password = PW;
-        if (log_name.equals("Yes")) {
-            if (email.length() > 0 && password.length() > 0 && checkPW.length() > 0 && name.length() > 0) {
+
+        if (email.length() > 0 && password.length() > 0 && checkPW.length() > 0 && name.length() > 0 && BIRTHDAY.length()>0) {
+            if (log_name.equals("Yes")) {
                 if (PW.equals(checkPW)) {
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -187,9 +205,9 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                                     if (task.isSuccessful()) {
                                         // Sign in success, update UI with the signed-in user's information
                                         FirebaseUser user = mAuth.getCurrentUser();
-                                        startToast("회원가입에 성공하였습니다.");
                                         postFirebaseDatabase(true);
                                         setInsertMode();
+                                        startToast("회원가입에 성공하였습니다.");
                                         Intent intent = new Intent(SignUp.this, MainActivity.class);
                                         startActivity(intent);
                                         log_name ="No";
@@ -205,10 +223,10 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                     startToast("비밀번호가 일치하지 않습니다.");
                 }
             } else {
-                startToast("회원정보를 입력하세요");
+                startToast("아이디를 확인하세요");
             }
         }else {
-            startToast("아이디를 확인하세요");
+            startToast("회원정보를 입력하세요");
         }
     }
 
@@ -242,24 +260,11 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                 PW = edit_PW.getText().toString().trim();
                 checkPW = PW_Check.getText().toString().trim();
                 //name = edit_Name.getText().toString().trim();
-                age = Long.parseLong(edit_Age.getText().toString());
-
+                BIRTHDAY = mETBirthday.getText().toString().trim();
                 createAccount();
-
-
-               /* if (!IsExistID()) {
-                    postFirebaseDatabase(true);
-                    setInsertMode();
-                   // createAccount();
-                    finish();
-                } else {
-                    startToast("이미 존재하는 이름 입니다. 다른 이름으로 설정해주세요.");
-                }*/
                 edit_ID.requestFocus();
                 edit_ID.setCursorVisible(true);
-
                 break;
-
 
             case R.id.check_name:
                 name = edit_Name.getText().toString().trim();
@@ -282,7 +287,12 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                 startActivity(intent);
                 break;
 
-
+            case R.id.btn_birth:
+                InitializeView();
+                InitializeListener();
+                DatePickerDialog dialog = new DatePickerDialog(this,callbackMethod,2020,1,12);
+                dialog.show();
+                break;
         }
     }
 

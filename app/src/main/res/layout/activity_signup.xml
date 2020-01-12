@@ -93,13 +93,19 @@
 
             <EditText
                 android:id="@+id/edit_name"
-                android:layout_width="304dp"
+                android:layout_width="214dp"
                 android:layout_height="46dp"
                 android:layout_alignBaseline="@+id/text_name"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:maxLength="10"
                 android:hint="이름"/>
+            <Button
+                android:id="@+id/check_name"
+                android:layout_width="91dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="확인" />
         </LinearLayout>
 
         <LinearLayout

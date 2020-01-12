@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent1 = new Intent(this,SignUp.class);
                 startActivity(intent1);
                 break;
+
             case R.id.btn_login:
                 userID = UserID.getText().toString();
                 userPW = UserPW.getText().toString();
@@ -58,8 +59,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent2 = new Intent(this,Login.class);
                 intent2.putExtra("userID",userID);
                 intent2.putExtra("userPW",userPW);
-
                 startActivity(intent2);
+
 
         }
 

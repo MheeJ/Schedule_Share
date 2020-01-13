@@ -19,6 +19,9 @@
         <activity android:name=".Login"/>
         <activity android:name=".SignUp"/>
         <activity android:name=".Schedule_list"/>
+        <activity android:name=".Project_list"/>
+        <activity android:name=".Make_project"/>
+        <activity android:name=".Project_main"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

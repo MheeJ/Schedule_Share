@@ -161,7 +161,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         });
     }
 
-    public void postFirebaseDatabase(boolean add) {
+    public void postDatabase(boolean add) {
         mPostReference = FirebaseDatabase.getInstance().getReference();
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
@@ -205,7 +205,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                                     if (task.isSuccessful()) {
                                         // Sign in success, update UI with the signed-in user's information
                                         FirebaseUser user = mAuth.getCurrentUser();
-                                        postFirebaseDatabase(true);
+                                        postDatabase(true);
                                         setInsertMode();
                                         startToast("회원가입에 성공하였습니다.");
                                         Intent intent = new Intent(SignUp.this, MainActivity.class);

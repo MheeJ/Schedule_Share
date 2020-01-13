@@ -28,7 +28,8 @@ public class Add_User extends AppCompatActivity implements View.OnClickListener{
     EditText ed;
     String text = "";
     String searchID = "no";
-    public String adapter_list;
+    public String adapter_list ="";
+    String save_member;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,10 @@ public class Add_User extends AppCompatActivity implements View.OnClickListener{
 
         btnlist();
 
+        Intent intent=getIntent();
+        String addr = intent.getStringExtra("addr");
+        adapter_list = addr;
+
     }
 
     /**
@@ -63,7 +68,7 @@ public class Add_User extends AppCompatActivity implements View.OnClickListener{
                 ed.setText("");                           // EditText 입력란 초기화
                 adapter.notifyDataSetChanged();// 리스트 목록 갱신
                 searchID ="no";
-                adapter_list = String.join("#",items);
+                adapter_list = String.join(",",items);
                 startToast(adapter_list);
             }
         }
@@ -109,6 +114,8 @@ public class Add_User extends AppCompatActivity implements View.OnClickListener{
     private void startToast(String msg){
         Toast.makeText(Add_User.this, msg, Toast.LENGTH_SHORT).show();
     }
+
+
     /**
      * 각 목록 버튼 클릭 시 실행되는 메소드
      */
@@ -126,6 +133,10 @@ public class Add_User extends AppCompatActivity implements View.OnClickListener{
                 Delete_ID();
                 break;
             case R.id.btn_finish:
+                String data = adapter_list;
+                Intent intent = new Intent();
+                intent.putExtra("editAddr",data);
+                setResult(RESULT_OK,intent);
                finish();
                break;
         }

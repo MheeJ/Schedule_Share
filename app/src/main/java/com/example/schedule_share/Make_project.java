@@ -26,14 +26,17 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
 
     private DatabaseReference mPostReference;
 
-    private TextView name, period, goal, member,start,finish, start_date,finish_date,input_period,memeber_num,period_1;
+    private TextView name, period, goal, member,start,finish, start_date,finish_date,input_period,memeber_num,period_1,Member_list;
     private EditText input_name, input_goal,input_member;
-    private Button done,start_button,finish_button,Add_member;
+    private Button done,start_button,finish_button,Add_member,Check_member;
     private DatePickerDialog.OnDateSetListener callbackMethod;
     private DatePickerDialog.OnDateSetListener callbackMethod2;
+    String getData="";
+    final static int CODE=1;
 
     private String project_name,date1,date2,Days;
     private String project_info;
+    String project_member="멤버";
     private long project_date,calDateDays,pdays;
 
     ArrayAdapter<String> arrayAdapter;
@@ -55,17 +58,23 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
 
 
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+
+
+
+
     }
 
     private void initView(){
         name = findViewById(R.id.name);
         period = findViewById(R.id.period);
         member = findViewById(R.id.member);
+        Check_member = findViewById(R.id.check_member);
         input_period = findViewById(R.id.input_period);
         input_name = findViewById(R.id.input_name);
         input_goal = findViewById(R.id.input_goal);
         memeber_num = findViewById(R.id.memeber_num);
         Add_member = findViewById(R.id.add_member);
+        Member_list = findViewById(R.id.member_list);
         start = findViewById(R.id.start);
         finish = findViewById(R.id.finish);
         start_date = findViewById(R.id.start_date);
@@ -76,6 +85,7 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
         finish_button = findViewById(R.id.finish_button);
         Add_member.setOnClickListener(this);
         done.setOnClickListener(this);
+        Check_member.setOnClickListener(this);
     }
 
     public void InitializeListener(){
@@ -108,11 +118,17 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
         };
     }
 
+
+
+
     public void OnClickHandler2(View view){
         DatePickerDialog dialog = new DatePickerDialog(this, callbackMethod2, 2020, 1,6);
 
         dialog.show();
     }
+
+
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -124,11 +140,38 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent2);
                 postFirebaseDatabase(true);
                 break;
-
             case R.id.add_member:
                 Intent intent3 = new Intent(this,Add_User.class);
-                startActivity(intent3);
+                intent3.putExtra("addr",Member_list.getText().toString());
+                startActivityForResult(intent3,CODE);
+                break;
+          /*  case R.id.check_member:
+                getData = getIntent().getStringExtra("adapter_list");
+                Member_list.setText(getData);
+                getData = project_member;
+                break;*/
 
+        }
+    }
+
+    //서브액티비티가 값을 보내오면 자동호출되는 메소드
+    //requestCode에 메인 액티비티에서 보낸 CODE가 담겨온다.
+    @Override
+    //onActivityResult( 메인액티비티에서 보낸 코드,서브액티비티에서 보내온 리절트코드,서브액티비티에서 데이터를 담아 보낸 인텐트 )
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+        switch(requestCode){
+            case 1:
+                if(resultCode==RESULT_OK){//서브Activity에서 보내온 resultCode와 비교
+                    //서브액티비티에서 인텐트에 담아온 정보 꺼내기
+                    String edtAddr=data.getStringExtra("editAddr");
+                    //텍스트뷰에 수정된 문자열 넣기
+                    Member_list.setText(edtAddr);
+                    project_member = edtAddr;
+                }else{
+
+                }
+                break;
         }
     }
 
@@ -139,7 +182,7 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
         if(add){
-            FirebasePost post = new FirebasePost(project_name, project_info, project_date);
+            FirebasePost post = new FirebasePost(project_name, project_info, project_date,project_member);
             postValues = post.toScheduleMap();
         }
         childUpdates.put("/project_list/" + project_name, postValues);
@@ -167,4 +210,6 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+
 }

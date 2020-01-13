@@ -20,6 +20,7 @@ class FirebasePost {
     public String project_name;
     public String project_info;
     public Long project_date;
+    public String project_member;
 
 
     public FirebasePost(){
@@ -34,10 +35,11 @@ class FirebasePost {
         this.gender = gender;
     }
 
-    public FirebasePost(String project_name, String project_info, Long project_date) {
+    public FirebasePost(String project_name, String project_info, Long project_date, String project_member) {
         this.project_name = project_name;
         this.project_info = project_info;
         this.project_date = project_date;
+        this.project_member = project_member;
     }
 
     @Exclude
@@ -57,6 +59,7 @@ class FirebasePost {
         result.put("project_name", project_name);
         result.put("project_info", project_info);
         result.put("project_date", project_date);
+        result.put("project_member",project_member);
         return result;
     }
 }

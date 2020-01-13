@@ -136,8 +136,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint=" 인원수 " />
+        <Button
+            android:id="@+id/add_member"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:text="추가" />
+        <Button
+            android:id="@+id/check_member"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:text="확인" />
 
     </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -145,13 +159,12 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <Button
-        android:id="@+id/add_member"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:text="인원 추가" />
-
+        <TextView
+            android:id="@+id/member_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="참여인원 명단" />
     </LinearLayout>
 
     <Button

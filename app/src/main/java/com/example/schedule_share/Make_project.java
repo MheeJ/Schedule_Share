@@ -27,8 +27,8 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
     private DatabaseReference mPostReference;
 
     private TextView name, period, goal, member,start,finish, start_date,finish_date,input_period,memeber_num,period_1;
-    private EditText input_name, input_goal,input_member,member_name;
-    private Button done,start_button,finish_button;
+    private EditText input_name, input_goal,input_member;
+    private Button done,start_button,finish_button,Add_member;
     private DatePickerDialog.OnDateSetListener callbackMethod;
     private DatePickerDialog.OnDateSetListener callbackMethod2;
 
@@ -65,7 +65,7 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
         input_name = findViewById(R.id.input_name);
         input_goal = findViewById(R.id.input_goal);
         memeber_num = findViewById(R.id.memeber_num);
-        member_name = findViewById(R.id.member_name);
+        Add_member = findViewById(R.id.add_member);
         start = findViewById(R.id.start);
         finish = findViewById(R.id.finish);
         start_date = findViewById(R.id.start_date);
@@ -74,6 +74,7 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
         period_1 = findViewById(R.id.period_1);
         start_button = findViewById(R.id.start_button);
         finish_button = findViewById(R.id.finish_button);
+        Add_member.setOnClickListener(this);
         done.setOnClickListener(this);
     }
 
@@ -116,19 +117,17 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.done :
-
-
                 String real_name = input_name.getText().toString();
-
                 Project_info projectInfo = new Project_info();
-
                 Intent intent2 = new Intent(this,Project_list.class);
                 intent2.putExtra("name", projectInfo);
-
                 startActivity(intent2);
                 postFirebaseDatabase(true);
-
                 break;
+
+            case R.id.add_member:
+                Intent intent3 = new Intent(this,Add_User.class);
+                startActivity(intent3);
 
         }
     }

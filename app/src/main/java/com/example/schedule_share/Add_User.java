@@ -20,46 +20,34 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 public class Add_User extends AppCompatActivity implements View.OnClickListener{
-    ArrayList<String> items;
-    ArrayAdapter<String> adapter;
-    ListView listView;
-    Button Btn_serch,Btn_UserAdd,Btn_UserDelete,Btn_Finish;
-    EditText ed;
-    String text = "";
-    String searchID = "no";
-    public String adapter_list ="";
-    String save_member;
+    private ArrayList<String> items;
+    private ArrayAdapter<String> adapter;
+    private ListView listView;
+    private Button Btn_serch,Btn_UserAdd,Btn_UserDelete,Btn_Finish;
+    private EditText ed;
+    private String text = "";
+    private String searchID = "no";
+    private String adapter_list ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_user);
 
-        //데이터 준비
         items = new ArrayList<String>();
+        adapter = new ArrayAdapter<String>(Add_User.this, android.R.layout.simple_list_item_single_choice, items);
 
-
-        // 어댑터 생성
-        adapter = new ArrayAdapter<String>(Add_User.this,
-                android.R.layout.simple_list_item_single_choice, items);
-
-        // 어댑터 설정
-        listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(adapter);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE); // 하나의 항목만 선택할 수 있도록 설정
 
-
-        btnlist();
+        findviewlist();
+        onclicklist();
 
         Intent intent=getIntent();
         String addr = intent.getStringExtra("addr");
         adapter_list = addr;
-
     }
 
-    /**
-     * ADD, DELETE 버튼 클릭 시 실행되는 메소드
-     */
     public void Add_ID(){
         if(searchID.equals("yes")) {
             if (!text.isEmpty()) {                        // 입력된 text 문자열이 비어있지 않으면
@@ -82,7 +70,6 @@ public class Add_User extends AppCompatActivity implements View.OnClickListener{
             items.remove(pos);                       // items 리스트에서 해당 위치의 요소 제거
             listView.clearChoices();                 // 선택 해제
             adapter.notifyDataSetChanged();
-            // 어답터와 연결된 원본데이터의 값이 변경된을 알려 리스트뷰 목록 갱신
         }
     }
 
@@ -114,10 +101,6 @@ public class Add_User extends AppCompatActivity implements View.OnClickListener{
         Toast.makeText(Add_User.this, msg, Toast.LENGTH_SHORT).show();
     }
 
-
-    /**
-     * 각 목록 버튼 클릭 시 실행되는 메소드
-     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -141,15 +124,19 @@ public class Add_User extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
-    private void btnlist(){
-        Btn_serch= (Button)findViewById(R.id.btn_search);
+    private void findviewlist(){
+        Btn_serch= findViewById(R.id.btn_search);
+        ed = findViewById(R.id.newitem);
+        Btn_UserAdd = findViewById(R.id.btn_userAdd);
+        Btn_UserDelete = findViewById(R.id.btn_userDelete);
+        Btn_Finish = findViewById(R.id.btn_finish);
+        listView = findViewById(R.id.listView);
+    }
+
+    private void onclicklist(){
         Btn_serch.setOnClickListener(this);
-        ed = (EditText) findViewById(R.id.newitem);
-        Btn_UserAdd = (Button)findViewById(R.id.btn_userAdd);
         Btn_UserAdd.setOnClickListener(this);
-        Btn_UserDelete = (Button)findViewById(R.id.btn_userDelete);
         Btn_UserDelete.setOnClickListener(this);
-        Btn_Finish = (Button)findViewById(R.id.btn_finish);
         Btn_Finish.setOnClickListener(this);
     }
 }

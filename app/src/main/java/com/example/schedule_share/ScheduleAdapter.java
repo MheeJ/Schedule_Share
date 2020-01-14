@@ -15,11 +15,11 @@ import java.util.ArrayList;
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder> {
 
 
-    private ArrayList<Schedule_info> arrayList;
+    private ArrayList<String> dData;
     private Context context;
 
-    public ScheduleAdapter(ArrayList<Schedule_info> arrayList, Context context){
-        this.arrayList = arrayList;
+    public ScheduleAdapter(ArrayList<String> dData, Context context){
+        this.dData = dData;
         this.context = context;
     }
 
@@ -32,26 +32,28 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
         ViewHolder holder = new ViewHolder(view);
 
-        return null;
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.schedule.setText(arrayList.get(position).getSchedule());
+        holder.tv_schedule.setText(dData.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return (arrayList != null ? arrayList.size() : 0);
+        return dData.size();
+//        return (dData != null ? dData.size() : 0);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView schedule;
+        public final TextView tv_schedule;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.schedule = itemView.findViewById(R.id.schedule);
+            this.tv_schedule = itemView.findViewById(R.id.schedule);
 
         }
     }

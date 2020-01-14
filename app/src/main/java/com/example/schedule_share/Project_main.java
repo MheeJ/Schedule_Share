@@ -40,8 +40,9 @@ public class Project_main extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.project_main);
         Intent intent = getIntent();
-
         set();
+        GoNotice.setOnClickListener(this);
+
         project_name = intent.getStringExtra("project_name");
         Project_Tiltle.setText(project_name);
 
@@ -63,6 +64,7 @@ public class Project_main extends AppCompatActivity implements View.OnClickListe
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent weekintent = new Intent(Project_main.this,Project_week.class);
             weekintent.putExtra("week",position+1);
+            weekintent.putExtra("project_name",project_name);
             startActivity(weekintent);
         }
     };
@@ -83,6 +85,5 @@ public class Project_main extends AppCompatActivity implements View.OnClickListe
         listView = (ListView)findViewById(R.id.listview);
         Project_Tiltle = (TextView)findViewById(R.id.project_title);
         GoNotice = (Button)findViewById(R.id.notice);
-        GoNotice.setOnClickListener(this);
     }
 }

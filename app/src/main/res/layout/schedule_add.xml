@@ -10,6 +10,7 @@
 
         <TextView
             android:text="할 일 작성"
+            android:fontFamily="@font/bmeuljirottf"
             android:textSize="20sp"
             android:gravity="center"
             android:layout_width="match_parent"
@@ -26,6 +27,8 @@
             android:id="@+id/write_schedule"
             android:textSize="15sp"
             android:textColor="#000"
+            android:fontFamily="@font/bmeuljirottf"
+            android:hint="할일 작성"
             android:alpha="0.87"
             android:gravity="center"
             android:layout_marginBottom="3dp"
@@ -46,6 +49,7 @@
         <Button
             android:id="@+id/write_done"
             android:text="완료"
+            android:fontFamily="@font/bmeuljirottf"
             android:textSize="15sp"
             android:padding="16dp"
             android:gravity="center"

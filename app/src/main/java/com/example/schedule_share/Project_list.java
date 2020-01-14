@@ -118,7 +118,7 @@ public class Project_list extends AppCompatActivity implements View.OnClickListe
                             adapter.notifyDataSetChanged();
 
 
-                        
+
                     }
 
                 }databaseRef.removeEventListener(this);

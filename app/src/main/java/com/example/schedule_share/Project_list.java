@@ -26,11 +26,13 @@ public class Project_list extends AppCompatActivity implements View.OnClickListe
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Project_info> arrayList;
+    ArrayList<String> listup;
     private Button btn_make;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     public String string;
     public String LogID;
+    public String [] Team_list;
     public String [] Member_list;
     ArrayList<String> notice_list;
     ArrayAdapter<String> notice_adapter;
@@ -52,7 +54,7 @@ public class Project_list extends AppCompatActivity implements View.OnClickListe
 
 
         arrayList = new ArrayList<Project_info>();
-        notice_list = new ArrayList<String>();
+
         // 어댑터 생성
         notice_adapter = new ArrayAdapter<String>(Project_list.this,
                 android.R.layout.simple_list_item_single_choice, notice_list);
@@ -60,28 +62,74 @@ public class Project_list extends AppCompatActivity implements View.OnClickListe
         adapter = new CustomAdapter(arrayList, this);
         recyclerView.setAdapter(adapter);
 
-        Search_list();
+        Search_ID();
+
 
     }
 
+    public void Search_ID(){
+        Intent intent = getIntent();
+        LogID = intent.getStringExtra("logID");
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseRef = database.getReference("Schedule_Share").child("id_list");
+        databaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // 클래스 모델이 필요?
+                for (DataSnapshot fileSnapshot : dataSnapshot.getChildren()) {
+                    String strname = (String) fileSnapshot.child("id").getValue();
+
+                        if (strname.equals(LogID)) {
+                            String strteam = (String) fileSnapshot.child("team").getValue();
+                            Team_list = strteam.split(",");
+                            Search_list();
+                        }
+
+                }
+                databaseRef.removeEventListener(this);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("TAG: ", "Failed to read value", databaseError.toException());
+            }
+        });
+    }
 
 
     public void Search_list(){
-        Intent intent = getIntent();
-        LogID = intent.getStringExtra("logID");
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseRef = database.getReference("Schedule_Share");
         databaseRef.child("project_list").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String strname = (String) snapshot.child("project_name").getValue();
+
+                    //arrayList.clear();
+                    for(int i=0; i<Team_list.length;i++) {
+                        if (strname.equals(Team_list[i])) {
+
+                                Project_info project_info = snapshot.getValue(Project_info.class);
+                                arrayList.add(project_info);
+                            }
+                            adapter.notifyDataSetChanged();
+
+
+                        
+                    }
+
+                }databaseRef.removeEventListener(this);
+
                 //파이어베이스 데이터베이스의 데이터를 받아오는 곳
-                arrayList.clear();
+               /* arrayList.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Project_info project_info = snapshot.getValue(Project_info.class);
                     arrayList.add(project_info);
                 }
-                adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();*/
             }
 
             @Override

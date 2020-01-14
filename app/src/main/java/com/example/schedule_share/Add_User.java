@@ -19,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
 public class Add_User extends AppCompatActivity implements View.OnClickListener{
     ArrayList<String> items;
     ArrayAdapter<String> adapter;
@@ -137,8 +136,8 @@ public class Add_User extends AppCompatActivity implements View.OnClickListener{
                 Intent intent = new Intent();
                 intent.putExtra("editAddr",data);
                 setResult(RESULT_OK,intent);
-               finish();
-               break;
+                finish();
+                break;
         }
     }
 
@@ -154,5 +153,3 @@ public class Add_User extends AppCompatActivity implements View.OnClickListener{
         Btn_Finish.setOnClickListener(this);
     }
 }
-
-

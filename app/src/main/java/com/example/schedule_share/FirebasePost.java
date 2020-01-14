@@ -9,7 +9,6 @@ import java.util.Map;
 /**
  * Created by DowonYoon on 2017-07-11.
  */
-
 @IgnoreExtraProperties
 class FirebasePost {
     public String id;
@@ -23,18 +22,20 @@ class FirebasePost {
     public String project_member;
     public String project_notice;
     public String schedule;
+    public String team;
 
 
     public FirebasePost(){
         // Default constructor required for calls to DataSnapshot.getValue(FirebasePost.class)
     }
 
-    public FirebasePost(String id, String pw, String name, String birth, String gender) {
+    public FirebasePost(String id, String pw, String name, String birth, String gender, String team) {
         this.id = id;
         this.pw = pw;
         this.name = name;
         this.birth = birth;
         this.gender = gender;
+        this.team = team;
     }
 
     public FirebasePost(String project_name, String project_info, Long project_date, String project_member, String project_notice) {
@@ -57,6 +58,7 @@ class FirebasePost {
         result.put("name", name);
         result.put("birth", birth);
         result.put("gender", gender);
+        result.put("team",team);
         return result;
     }
 

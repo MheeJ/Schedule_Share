@@ -15,7 +15,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
-
 public class Schedule_add extends AppCompatActivity implements View.OnClickListener{
 
     private DatabaseReference mPostReference;
@@ -68,7 +67,6 @@ public class Schedule_add extends AppCompatActivity implements View.OnClickListe
     public void postFirebaseDatabase(boolean add){
         mPostReference = FirebaseDatabase.getInstance().getReference();
         Map<String, Object> childUpdates = new HashMap<>();
-        Map<String, Object> postValues = null;
         if(add){
             Project_week.i++;
             Project_week.result.put("schedule"+Project_week.i, write_schedule.getText().toString());

@@ -111,10 +111,10 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
 
                 calDate();
 
-              long i = calDateDays/7;
-              project_date = i;
-              Days = Long.toString(i) ;
-              input_period.setText(Days);
+                long i = calDateDays/7;
+                project_date = i;
+                Days = Long.toString(i) ;
+                input_period.setText(Days);
             }
         };
     }

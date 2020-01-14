@@ -60,6 +60,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     String PW;
     String checkPW;
     String name;
+    String team = "없음";
     String log_name="No";
     String BIRTHDAY;
     long age;
@@ -166,7 +167,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
         if (add) {
-            FirebasePost post = new FirebasePost(ID, PW, name, BIRTHDAY, gender);
+            FirebasePost post = new FirebasePost(ID, PW, name, BIRTHDAY, gender,team);
             postValues = post.toMap();
         }
         childUpdates.put("Schedule_Share"+"/id_list/" + name, postValues);

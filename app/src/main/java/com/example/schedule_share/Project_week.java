@@ -19,7 +19,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 public class Project_week extends AppCompatActivity implements View.OnClickListener {
 
     private TextView week;
@@ -59,7 +58,7 @@ public class Project_week extends AppCompatActivity implements View.OnClickListe
 
         database = FirebaseDatabase.getInstance();
 
-        databaseReference = database.getReference("project_list").child(project_name).child(w+"주차");
+        databaseReference = database.getReference("Schedule_Share").child("project_list").child(project_name).child(w+"주차");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -93,9 +92,10 @@ public class Project_week extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (requestCode == 1){
-            if(resultCode == RESULT_OK){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
                 String result = data.getStringExtra("result");
 
             }

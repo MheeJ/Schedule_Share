@@ -65,6 +65,8 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
+
     private void initView(){
         name = findViewById(R.id.name);
         period = findViewById(R.id.period);

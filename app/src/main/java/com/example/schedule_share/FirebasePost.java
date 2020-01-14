@@ -22,6 +22,7 @@ class FirebasePost {
     public Long project_date;
     public String project_member;
     public String project_notice;
+    public String schedule;
 
 
     public FirebasePost(){
@@ -42,6 +43,10 @@ class FirebasePost {
         this.project_date = project_date;
         this.project_member = project_member;
         this.project_notice = project_notice;
+    }
+
+    public FirebasePost(String notice) {
+        this.schedule = notice;
     }
 
     @Exclude

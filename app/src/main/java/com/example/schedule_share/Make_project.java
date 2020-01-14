@@ -36,7 +36,8 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
 
     private String project_name,date1,date2,Days;
     private String project_info;
-    String project_member="멤버";
+    private String project_member="멤버";
+    private String project_notice = "공지사항";
     private long project_date,calDateDays,pdays;
 
     ArrayAdapter<String> arrayAdapter;
@@ -142,6 +143,7 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
             case R.id.add_member:
                 Intent intent3 = new Intent(this,Add_User.class);
                 intent3.putExtra("addr",Member_list.getText().toString());
+                intent3.putExtra("notice",project_notice);
                 startActivityForResult(intent3,CODE);
                 break;
           /*  case R.id.check_member:
@@ -180,10 +182,10 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
         if(add){
-            FirebasePost post = new FirebasePost(project_name, project_info, project_date,project_member);
+            FirebasePost post = new FirebasePost(project_name, project_info, project_date,project_member,project_notice);
             postValues = post.toScheduleMap();
         }
-        childUpdates.put("/project_list/" + project_name, postValues);
+        childUpdates.put("Schedule_Share"+"/project_list/" + project_name, postValues);
         mPostReference.updateChildren(childUpdates);
     }
 

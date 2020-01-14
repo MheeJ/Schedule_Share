@@ -23,6 +23,7 @@
         <activity android:name=".Make_project"/>
         <activity android:name=".Project_main"/>
         <activity android:name=".Add_User"/>
+        <activity android:name="Project_Notice"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

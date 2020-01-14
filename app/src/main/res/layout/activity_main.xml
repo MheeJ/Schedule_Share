@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="#AAAAFF"
+    android:background="#DDDDDD"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView
         android:id="@+id/textView"
@@ -18,7 +18,7 @@
     <ImageView
         android:layout_width="427dp"
         android:layout_height="329dp"
-        android:src="@drawable/toystory" />
+        android:src="@drawable/ic_clock" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

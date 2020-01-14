@@ -44,8 +44,19 @@ public class Project_list extends AppCompatActivity implements View.OnClickListe
 
         database = FirebaseDatabase.getInstance();
 
-        databaseReference = database.getReference("project_list");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+        adapter = new CustomAdapter(arrayList, this);
+        recyclerView.setAdapter(adapter);
+
+        Search_list();
+    }
+
+
+    public void Search_list(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseRef = database.getReference("Schedule_Share");
+        databaseRef.child("project_list").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //파이어베이스 데이터베이스의 데이터를 받아오는 곳
@@ -62,10 +73,8 @@ public class Project_list extends AppCompatActivity implements View.OnClickListe
                 Log.e("MainActivity", String.valueOf(databaseError.toException()));
             }
         });
-
-        adapter = new CustomAdapter(arrayList, this);
-        recyclerView.setAdapter(adapter);
     }
+
 
     @Override
     public void onClick(View view) {

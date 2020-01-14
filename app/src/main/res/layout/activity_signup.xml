@@ -17,6 +17,8 @@
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
             android:textSize="25dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/bmeuljirottf"
             android:text="회원가입" />
 
         <LinearLayout
@@ -77,6 +79,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:maxLength="10"
+
                 android:hint="비밀번호 확인"/>
 
         </LinearLayout>
@@ -99,12 +102,14 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:maxLength="10"
+
                 android:hint="이름"/>
             <Button
                 android:id="@+id/check_name"
                 android:layout_width="91dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:fontFamily="@font/bmeuljirottf"
                 android:text="확인" />
         </LinearLayout>
 
@@ -123,7 +128,8 @@
                 android:id="@+id/birthday"
                 android:layout_width="216dp"
                 android:layout_height="44dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="0dp"
+
                 android:hint="생년월일" />
 
             <Button
@@ -131,7 +137,8 @@
                 android:layout_width="91dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="DatePickerDialog"/>
+                android:fontFamily="@font/bmeuljirottf"
+                android:text="날짜선택"/>
         </LinearLayout>
 
 
@@ -152,6 +159,7 @@
                 android:layout_height="45dp"
                 android:layout_marginLeft="5dp"
                 android:text="성별"
+                android:fontFamily="@font/bmeuljirottf"
                 android:textSize="18dp"
                 />
             <CheckBox
@@ -160,7 +168,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text="Man"
-                android:textSize="15dp" />
+                android:fontFamily="@font/bmeuljirottf"
+                android:textSize="17dp" />
 
             <CheckBox
                 android:id="@+id/check_woman"
@@ -168,7 +177,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:text="Woman"
-                android:textSize="15dp" />
+                android:fontFamily="@font/bmeuljirottf"
+                android:textSize="17dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -182,7 +192,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
                 android:layout_marginRight="12dp"
-                android:text="회원가입" />
+                android:fontFamily="@font/bmeuljirottf"
+                android:background="#EEEEFF"
+                android:text="회원가입 완료" />
 
         </LinearLayout>
     </LinearLayout>

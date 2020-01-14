@@ -12,7 +12,8 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:id="@+id/schedule"
-            android:hint="일정"/>
+            android:hint="일정"
+            android:fontFamily="@font/bmeuljirottf"/>
 
     </LinearLayout>
 

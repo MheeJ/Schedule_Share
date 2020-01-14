@@ -23,6 +23,7 @@
             android:layout_weight="1"
             android:id="@+id/newitem"
             android:hint="사용자 닉네임 검색"
+            android:fontFamily="@font/bmeuljirottf"
             android:focusable="true"
             android:focusableInTouchMode="true"/>
         <Button
@@ -46,6 +47,7 @@
         android:layout_height="wrap_content">
         <Button
             android:text="인원 추가"
+            android:fontFamily="@font/bmeuljirottf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -54,6 +56,7 @@
 
         <Button
             android:text="인원 삭제"
+            android:fontFamily="@font/bmeuljirottf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -61,6 +64,7 @@
             />
         <Button
             android:text="완료"
+            android:fontFamily="@font/bmeuljirottf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

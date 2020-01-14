@@ -17,12 +17,14 @@
             android:layout_weight="1"
             android:textSize="20dp"
             android:layout_marginLeft="10dp"
+            android:fontFamily="@font/bmeuljirottf"
             android:text="TextView" />
 
         <Button
             android:id="@+id/notice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/bmeuljirottf"
             android:text="공지사항" />
 
     </LinearLayout>
@@ -31,5 +33,6 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/bmeuljirottf"
         android:id="@+id/listview"/>
 </LinearLayout>

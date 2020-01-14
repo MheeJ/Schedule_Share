@@ -23,11 +23,13 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textSize="20dp"
+            android:fontFamily="@font/bmeuljirottf"
             android:text="프로젝트명 :  " />
         <EditText
             android:id="@+id/input_name"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/bmeuljirottf"
             android:hint="프로젝트 이름" />
 
     </LinearLayout>
@@ -43,13 +45,15 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textSize="20dp"
-            android:text="프로젝트 기간      " />
+            android:fontFamily="@font/bmeuljirottf"
+            android:text="프로젝트 기간 :      " />
         <TextView
             android:id="@+id/input_period"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textSize="20dp"
+            android:fontFamily="@font/bmeuljirottf"
             android:hint="프로젝트"/>
         <TextView
             android:id="@+id/period_1"
@@ -57,6 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textSize="20dp"
+            android:fontFamily="@font/bmeuljirottf"
             android:hint=" 주차"/>
 
 
@@ -73,12 +78,14 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textSize="15dp"
+            android:fontFamily="@font/bmeuljirottf"
             android:hint="시작날짜" />
         <EditText
             android:id="@+id/start_date"
             android:layout_width="230dp"
             android:layout_marginLeft="10dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/bmeuljirottf"
             android:hint="시작날짜 선택" />
         <Button
             android:id="@+id/start_button"
@@ -86,6 +93,7 @@
             android:layout_height="wrap_content"
             android:onClick="OnClickHandler"
             android:layout_marginLeft="10dp"
+            android:fontFamily="@font/bmeuljirottf"
             android:text="날짜선택" />
     </LinearLayout>
 
@@ -101,12 +109,14 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textSize="15dp"
+            android:fontFamily="@font/bmeuljirottf"
             android:hint="종료날짜" />
         <EditText
             android:id="@+id/finish_date"
             android:layout_width="230dp"
             android:layout_marginLeft="10dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/bmeuljirottf"
             android:hint="종료날짜 선택" />
         <Button
             android:id="@+id/finish_button"
@@ -114,6 +124,7 @@
             android:layout_height="wrap_content"
             android:onClick="OnClickHandler2"
             android:layout_marginLeft="10dp"
+            android:fontFamily="@font/bmeuljirottf"
             android:text="날짜선택" />
     </LinearLayout>
 
@@ -130,11 +141,13 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textSize="20dp"
+            android:fontFamily="@font/bmeuljirottf"
             android:text="목표   " />
         <EditText
             android:id="@+id/input_goal"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/bmeuljirottf"
             android:hint="프로젝트 목표 입력" />
 
     </LinearLayout>
@@ -150,6 +163,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textSize="20dp"
+            android:fontFamily="@font/bmeuljirottf"
             android:text="참여인원   " />
         <TextView
             android:id="@+id/memeber_num"
@@ -157,6 +171,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textSize="20dp"
+            android:fontFamily="@font/bmeuljirottf"
             android:hint=" 인원수 " />
         <Button
             android:id="@+id/add_member"
@@ -164,6 +179,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginLeft="10dp"
+            android:fontFamily="@font/bmeuljirottf"
             android:text="추가" />
 
     </LinearLayout>
@@ -183,6 +199,7 @@
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:textSize="15dp"
+            android:fontFamily="@font/bmeuljirottf"
             android:text="참여 명단" />
     </LinearLayout>
 
@@ -191,6 +208,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:fontFamily="@font/bmeuljirottf"
         android:text="프로젝트 생성"/>
 
 </LinearLayout>

@@ -12,7 +12,8 @@
             android:id="@+id/week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="차수" />
+            android:text="차수"
+            android:fontFamily="@font/bmeuljirottf"/>
 
     </LinearLayout>
 
@@ -24,7 +25,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView2"
             android:layout_width="match_parent"
-            android:layout_height="640dp" />
+            android:layout_height="640dp"
+            android:fontFamily="@font/bmeuljirottf"/>
     </LinearLayout>
 
     <LinearLayout
@@ -37,7 +39,8 @@
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="일정 추가" />
+            android:text="일정 추가"
+            android:fontFamily="@font/bmeuljirottf"/>
 
     </LinearLayout>
 

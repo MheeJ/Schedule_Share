@@ -8,12 +8,14 @@
         android:id="@+id/edit_notice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="공지사항 입력" />
+        android:hint="공지사항 입력"
+        android:fontFamily="@font/bmeuljirottf"/>
 
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="0dip"
+        android:fontFamily="@font/bmeuljirottf"
         android:layout_weight="1" />
     <LinearLayout
         android:orientation="horizontal"
@@ -21,6 +23,7 @@
         android:layout_height="wrap_content">
         <Button
             android:text="공지사항 추가"
+            android:fontFamily="@font/bmeuljirottf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -29,6 +32,7 @@
 
         <Button
             android:text="공지사항 삭제"
+            android:fontFamily="@font/bmeuljirottf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -36,6 +40,7 @@
             />
         <Button
             android:text="완료"
+            android:fontFamily="@font/bmeuljirottf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

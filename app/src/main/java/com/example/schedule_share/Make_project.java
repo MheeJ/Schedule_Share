@@ -3,6 +3,7 @@ package com.example.schedule_share;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -12,8 +13,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,11 +37,12 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
     private DatePickerDialog.OnDateSetListener callbackMethod2;
     String getData="";
     final static int CODE=1;
-
+    String [] team_member;
     private String project_name,date1,date2,Days;
     private String project_info;
     private String project_member="멤버";
     private String project_notice = "공지사항";
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     private long project_date,calDateDays,pdays;
 
     ArrayAdapter<String> arrayAdapter;
@@ -138,8 +143,10 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
                 Project_info projectInfo = new Project_info();
                 Intent intent2 = new Intent(this,Project_list.class);
                 intent2.putExtra("name", projectInfo);
+                intent2.putExtra("name_member",project_member);
                 startActivity(intent2);
                 postFirebaseDatabase(true);
+                update_team();
                 break;
 
             case R.id.add_member:
@@ -148,11 +155,6 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
                 intent3.putExtra("notice",project_notice);
                 startActivityForResult(intent3,CODE);
                 break;
-          /*  case R.id.check_member:
-                getData = getIntent().getStringExtra("adapter_list");
-                Member_list.setText(getData);
-                getData = project_member;
-                break;*/
         }
     }
 
@@ -175,6 +177,39 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
         }
+    }
+
+
+    public void update_team(){
+        final String[] array = project_member.split(",");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseRef = database.getReference("Schedule_Share").child("id_list");
+        databaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // 클래스 모델이 필요?
+                for (DataSnapshot fileSnapshot : dataSnapshot.getChildren()) {
+                    String strname = (String) fileSnapshot.child("name").getValue();
+
+                    Log.v("TAG: value is ", strname);
+                    for(int i=0; i<array.length;i++) {
+                        if (strname.equals(array[i])) {
+                            String strteam = (String) fileSnapshot.child("team").getValue();
+
+                            String in = strteam + "," + project_name;
+                            mRootRef.child("Schedule_Share").child("id_list").child(strname).child("team").setValue(in);
+                        }
+                    }
+                }
+                databaseRef.removeEventListener(this);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("TAG: ", "Failed to read value", databaseError.toException());
+            }
+        });
+
+
     }
 
     public void postFirebaseDatabase(boolean add){

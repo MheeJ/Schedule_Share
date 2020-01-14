@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -29,31 +30,46 @@ public class Project_list extends AppCompatActivity implements View.OnClickListe
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     public String string;
+    public String LogID;
+    public String [] Member_list;
+    ArrayList<String> notice_list;
+    ArrayAdapter<String> notice_adapter;
+    String name_member = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.project_list);
 
-        btn_make = (Button)findViewById(R.id.make);
-        btn_make.setOnClickListener(this);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(layoutManager);
-        arrayList = new ArrayList<Project_info>();
+        set();
+       // setMember();
+
 
         database = FirebaseDatabase.getInstance();
 
 
+        name_member = getIntent().getStringExtra("name_member");
+
+
+        arrayList = new ArrayList<Project_info>();
+        notice_list = new ArrayList<String>();
+        // 어댑터 생성
+        notice_adapter = new ArrayAdapter<String>(Project_list.this,
+                android.R.layout.simple_list_item_single_choice, notice_list);
 
         adapter = new CustomAdapter(arrayList, this);
         recyclerView.setAdapter(adapter);
 
         Search_list();
+
     }
 
 
+
+
     public void Search_list(){
+        Intent intent = getIntent();
+        LogID = intent.getStringExtra("logID");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseRef = database.getReference("Schedule_Share");
         databaseRef.child("project_list").addValueEventListener(new ValueEventListener() {
@@ -87,5 +103,13 @@ public class Project_list extends AppCompatActivity implements View.OnClickListe
                 break;
 
         }
+    }
+
+    public void  set(){
+        btn_make = (Button)findViewById(R.id.make);
+        btn_make.setOnClickListener(this);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(layoutManager);
     }
 }

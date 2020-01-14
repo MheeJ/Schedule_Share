@@ -60,6 +60,7 @@ public class Login extends AppCompatActivity {
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     startToast("로그인 성공");
                                     Intent intent = new Intent(Login.this, Project_list.class);
+                                    intent.putExtra("logID",getID);
                                     startActivity(intent);
                                     finish();
                                 }else {
@@ -73,11 +74,6 @@ public class Login extends AppCompatActivity {
                                         startToast("Exception");
                                     }finish();
 
-                                  /* if(task.getException() != null){
-                                       finish();
-                                       startToast(task.getException().toString());
-
-                                   }*/
                                 }
                             }
                         });

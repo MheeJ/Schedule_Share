@@ -60,7 +60,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     String PW;
     String checkPW;
     String name;
-    String team = "없음";
+    String team = "";
     String log_name="No";
     String BIRTHDAY;
     long age;

@@ -93,16 +93,6 @@ public class Project_Notice extends AppCompatActivity implements View.OnClickLis
                             notice_list.add(array[i]);
                         }
                     }
-
-                  /*  if(strname.equals(project)) {
-                        String str = (String) fileSnapshot.child(project).getValue();
-                        Log.v("TAG: value is ", str);
-                        String[] array = str.split(",");
-                        for (int i = 0; i < array.length; i++) {
-                            notice_list.add(array[i]);
-                        }
-
-                    }*/
                 }
             }
             @Override

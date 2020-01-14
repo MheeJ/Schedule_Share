@@ -21,10 +21,12 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="20dp"
             android:text="프로젝트명 :  " />
         <EditText
             android:id="@+id/input_name"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:hint="프로젝트 이름" />
 
@@ -39,16 +41,22 @@
             android:id="@+id/period"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="20dp"
             android:text="프로젝트 기간      " />
         <TextView
             android:id="@+id/input_period"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="20dp"
             android:hint="프로젝트"/>
         <TextView
             android:id="@+id/period_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="20dp"
             android:hint=" 주차"/>
 
 
@@ -63,18 +71,22 @@
             android:id="@+id/start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="시작날짜   " />
+            android:layout_marginLeft="10dp"
+            android:textSize="15dp"
+            android:hint="시작날짜" />
         <EditText
             android:id="@+id/start_date"
-            android:layout_width="wrap_content"
+            android:layout_width="230dp"
+            android:layout_marginLeft="10dp"
             android:layout_height="wrap_content"
-            android:hint=" start_date" />
+            android:hint="시작날짜 선택" />
         <Button
             android:id="@+id/start_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="OnClickHandler"
-            android:text="DATEPICKERDIALOG" />
+            android:layout_marginLeft="10dp"
+            android:text="날짜선택" />
     </LinearLayout>
 
     <LinearLayout
@@ -87,18 +99,22 @@
             android:id="@+id/finish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="종료날짜   " />
+            android:layout_marginLeft="10dp"
+            android:textSize="15dp"
+            android:hint="종료날짜" />
         <EditText
             android:id="@+id/finish_date"
-            android:layout_width="wrap_content"
+            android:layout_width="230dp"
+            android:layout_marginLeft="10dp"
             android:layout_height="wrap_content"
-            android:hint=" start_date" />
+            android:hint="종료날짜 선택" />
         <Button
             android:id="@+id/finish_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="OnClickHandler2"
-            android:text="DATEPICKERDIALOG" />
+            android:layout_marginLeft="10dp"
+            android:text="날짜선택" />
     </LinearLayout>
 
 
@@ -112,12 +128,14 @@
             android:id="@+id/goal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="20dp"
             android:text="목표   " />
         <EditText
             android:id="@+id/input_goal"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint=" start_date" />
+            android:hint="프로젝트 목표 입력" />
 
     </LinearLayout>
 
@@ -130,24 +148,23 @@
             android:id="@+id/member"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="20dp"
             android:text="참여인원   " />
         <TextView
             android:id="@+id/memeber_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="20dp"
             android:hint=" 인원수 " />
         <Button
             android:id="@+id/add_member"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginLeft="10dp"
             android:text="추가" />
-        <Button
-            android:id="@+id/check_member"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:text="확인" />
 
     </LinearLayout>
 
@@ -164,7 +181,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="참여인원 명단" />
+            android:layout_marginLeft="10dp"
+            android:textSize="15dp"
+            android:text="참여 명단" />
     </LinearLayout>
 
     <Button

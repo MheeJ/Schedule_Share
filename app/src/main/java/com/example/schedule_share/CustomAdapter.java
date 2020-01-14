@@ -59,6 +59,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                     Context context = v.getContext();
                     Intent intent4 = new Intent(v.getContext(),Project_main.class);
                     intent4.putExtra("number", mData.get(pos).getProject_date());
+                    intent4.putExtra("project_name", mData.get(pos).getProject_name());
                     context.startActivity(intent4);
                 }
             });

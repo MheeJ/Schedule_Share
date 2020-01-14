@@ -28,7 +28,7 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
 
     private TextView name, period, goal, member,start,finish, start_date,finish_date,input_period,memeber_num,period_1,Member_list;
     private EditText input_name, input_goal,input_member;
-    private Button done,start_button,finish_button,Add_member,Check_member;
+    private Button done,start_button,finish_button,Add_member;
     private DatePickerDialog.OnDateSetListener callbackMethod;
     private DatePickerDialog.OnDateSetListener callbackMethod2;
     String getData="";
@@ -68,7 +68,6 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
         name = findViewById(R.id.name);
         period = findViewById(R.id.period);
         member = findViewById(R.id.member);
-        Check_member = findViewById(R.id.check_member);
         input_period = findViewById(R.id.input_period);
         input_name = findViewById(R.id.input_name);
         input_goal = findViewById(R.id.input_goal);
@@ -85,7 +84,6 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
         finish_button = findViewById(R.id.finish_button);
         Add_member.setOnClickListener(this);
         done.setOnClickListener(this);
-        Check_member.setOnClickListener(this);
     }
 
     public void InitializeListener(){
@@ -140,6 +138,7 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent2);
                 postFirebaseDatabase(true);
                 break;
+
             case R.id.add_member:
                 Intent intent3 = new Intent(this,Add_User.class);
                 intent3.putExtra("addr",Member_list.getText().toString());
@@ -150,7 +149,6 @@ public class Make_project extends AppCompatActivity implements View.OnClickListe
                 Member_list.setText(getData);
                 getData = project_member;
                 break;*/
-
         }
     }
 

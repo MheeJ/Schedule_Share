@@ -19,26 +19,29 @@ public class Schedule_add extends AppCompatActivity implements View.OnClickListe
 
     private DatabaseReference mPostReference;
 
-    public Button write_done;
-    public EditText write_schedule;
+    public Button btn_write_done;
+    public EditText et_write_schedule;
     public int week;
     private String project_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.schedule_add);
 
-        write_schedule = (EditText) findViewById(R.id.write_schedule);
-        write_done = (Button) findViewById(R.id.write_done);
-        write_done.setOnClickListener(this);
+        set();
 
         Intent intent8 = getIntent();
         String data = intent8.getStringExtra("data");
         project_name = intent8.getStringExtra("project_name");
-        write_schedule.setText(data);
+        et_write_schedule.setText(data);
         week = intent8.getIntExtra("schedule_week",0);
+    }
+
+    private void set() {
+        et_write_schedule = (EditText) findViewById(R.id.write_schedule);
+        btn_write_done = (Button) findViewById(R.id.write_done);
+        btn_write_done.setOnClickListener(this);
     }
 
     @Override
@@ -47,7 +50,6 @@ public class Schedule_add extends AppCompatActivity implements View.OnClickListe
         intent7.putExtra("result","Close Popup");
         setResult(RESULT_OK,intent7);
         postFirebaseDatabase(true);
-
         finish();
     }
 
@@ -64,14 +66,14 @@ public class Schedule_add extends AppCompatActivity implements View.OnClickListe
         return;
     }
 
-    public void postFirebaseDatabase(boolean add){
+    private void postFirebaseDatabase(boolean add){
         mPostReference = FirebaseDatabase.getInstance().getReference();
         Map<String, Object> childUpdates = new HashMap<>();
         if(add){
-            Project_week.i++;
-            Project_week.result.put("schedule"+Project_week.i, write_schedule.getText().toString());
+            Schedule_week.i++;
+            Schedule_week.result.put("schedule"+ Schedule_week.i, et_write_schedule.getText().toString());
         }
-        childUpdates.put("Schedule_Share"+"/project_list/" + project_name +"/"+ week + "주차", Project_week.result);
+        childUpdates.put("Schedule_Share"+"/project_list/" + project_name +"/"+ week + "주차", Schedule_week.result);
         mPostReference.updateChildren(childUpdates);
     }
 }

@@ -19,74 +19,56 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Project_Notice extends AppCompatActivity implements View.OnClickListener {
 
-    Button Add_Notice, Delete_Notice, Finish_Notice;
-    ListView listView1;
-    EditText Edit_Notice;
-    String text1 = "";
-    String grup_notice = "";
-    ArrayList<String> notice_list;
-    ArrayAdapter<String> notice_adapter;
-    private DatabaseReference mPostReference;
-    String project = "";
-    String mini;
-    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    private Button btn_Add_Notice, btn_Delete_Notice, btn_Finish_Notice;
+    private ListView listView;
+    private EditText Edit_Notice;
+    private String text = "";
+    private String grup_notice = "";
+    private ArrayList<String> notice_list;
+    private ArrayAdapter<String> notice_adapter;
+    private String project = "";
+    private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.project_notice);
 
-        setting();
-
+        findviewlist();
+        onclicklist();
 
         notice_list = new ArrayList<String>();
+        notice_adapter = new ArrayAdapter<String>(Project_Notice.this, android.R.layout.simple_list_item_single_choice, notice_list);
 
-        // 어댑터 생성
-        notice_adapter = new ArrayAdapter<String>(Project_Notice.this,
-                android.R.layout.simple_list_item_single_choice, notice_list);
+        listView.setAdapter(notice_adapter);
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE); // 하나의 항목만 선택할 수 있도록 설정
 
-        // 어댑터 설정
-        listView1 = (ListView) findViewById(R.id.listView1);
-        listView1.setAdapter(notice_adapter);
-        listView1.setChoiceMode(ListView.CHOICE_MODE_SINGLE); // 하나의 항목만 선택할 수 있도록 설정
-
-        Intent intent = getIntent();
+        intent = getIntent();
         String getNotice = intent.getStringExtra("notice");
         grup_notice = getNotice;
 
-
-
-
         updateNotice();
-
     }
 
-    public void updateNotice(){
+    private void updateNotice(){
         Search_Notice();
         notice_adapter.notifyDataSetChanged();
     }
 
-    public void Search_Notice(){
-        Intent intent = getIntent();
+    private void Search_Notice(){
         project = intent.getStringExtra("Go_project");
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseRef = database.getReference("Schedule_Share");
         databaseRef.child("project_list").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // 클래스 모델이 필요?
                 for (DataSnapshot fileSnapshot : dataSnapshot.getChildren()) {
                     String strname = (String) fileSnapshot.child("project_name").getValue();
                     String strnotice = (String) fileSnapshot.child("project_notice").getValue();
-
-                    Log.v("TAG: value is ", strname);
-
                     if(strname.equals(project)){
                         String[] array = strnotice.split(",");
                         for (int i = 0; i < array.length; i++) {
@@ -106,35 +88,32 @@ public class Project_Notice extends AppCompatActivity implements View.OnClickLis
         Toast.makeText(Project_Notice.this, msg, Toast.LENGTH_SHORT).show();
     }
 
-    public void addNotice(){
-        if (!text1.isEmpty()) {                        // 입력된 text 문자열이 비어있지 않으면
-            notice_list.add(text1);                          // items 리스트에 입력된 문자열 추가
+    private void addNotice(){
+        if (!text.isEmpty()) {                        // 입력된 text 문자열이 비어있지 않으면
+            notice_list.add(text);                          // items 리스트에 입력된 문자열 추가
             Edit_Notice.setText("");                           // EditText 입력란 초기화
             notice_adapter.notifyDataSetChanged();// 리스트 목록 갱신
-           // searchID ="no";
             grup_notice = String.join(",",notice_list);
             startToast(grup_notice);
         }
     }
 
-    public void deleteNotice(){
-        int pos = listView1.getCheckedItemPosition(); // 현재 선택된 항목의 첨자(위치값) 얻기
+    private void deleteNotice(){
+        int pos = listView.getCheckedItemPosition(); // 현재 선택된 항목의 첨자(위치값) 얻기
         if (pos != ListView.INVALID_POSITION) {      // 선택된 항목이 있으면
             notice_list.remove(pos);                       // items 리스트에서 해당 위치의 요소 제거
-            listView1.clearChoices();                 // 선택 해제
+            listView.clearChoices();                 // 선택 해제
             notice_adapter.notifyDataSetChanged();
             grup_notice = String.join(",",notice_list);
             startToast(grup_notice);
-            // 어답터와 연결된 원본데이터의 값이 변경된을 알려 리스트뷰 목록 갱신
         }
     }
-
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_notice:
-                text1 = Edit_Notice.getText().toString();
+                text = Edit_Notice.getText().toString();
                 addNotice();
                 break;
             case R.id.delete_notice:
@@ -146,21 +125,24 @@ public class Project_Notice extends AppCompatActivity implements View.OnClickLis
                 Intent intent10 = new Intent();
                 intent10.putExtra("edit_notice",notice_data);
                 setResult(RESULT_OK,intent10);
-
                 finish();
                 break;
         }
     }
 
 
-    public void setting(){
+    private void findviewlist(){
         Edit_Notice = (EditText)findViewById(R.id.edit_notice);
-        Add_Notice = (Button)findViewById(R.id.add_notice);
-        Add_Notice.setOnClickListener(this);
-        Delete_Notice = (Button)findViewById(R.id.delete_notice);
-        Delete_Notice.setOnClickListener(this);
-        Finish_Notice = (Button)findViewById(R.id.finish_notice);
-        Finish_Notice.setOnClickListener(this);
+        btn_Add_Notice = (Button)findViewById(R.id.add_notice);
+        btn_Delete_Notice = (Button)findViewById(R.id.delete_notice);
+        btn_Finish_Notice = (Button)findViewById(R.id.finish_notice);
+        listView = (ListView) findViewById(R.id.listView1);
+    }
+
+    private void onclicklist(){
+        btn_Add_Notice.setOnClickListener(this);
+        btn_Delete_Notice.setOnClickListener(this);
+        btn_Finish_Notice.setOnClickListener(this);
     }
 
 }

@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -27,10 +25,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -44,69 +40,103 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55]*$");
     private DatePickerDialog.OnDateSetListener callbackMethod;
 
-    Button btn_Insert,Check_Name,Btn_Birth;
-    TextView birthday;
-    EditText edit_ID;
-    EditText edit_PW;
-    EditText PW_Check, mETBirthday;
-    EditText edit_Name;
-    EditText edit_Age;
-    CheckBox check_Man;
-    CheckBox check_Woman;
-   // private TextView birthday;
-    int count;
-    String strname;
-    String ID;
-    String PW;
-    String checkPW;
-    String name;
-    String team = "";
-    String log_name="No";
-    String BIRTHDAY;
-    long age;
-    String gender = "";
-    String sort = "id";
+    private Button btn_Insert, btn_Check_Name, btn_Birth;
+    private TextView birthday;
+    private EditText edit_ID,edit_PW, edit_PW_Check, edit_Birthday, edit_Name, edit_Age;
+    private CheckBox check_Man, check_Woman;
 
-    ArrayAdapter<String> arrayAdapter;
-
-    static ArrayList<String> arrayIndex = new ArrayList<String>();
-    static ArrayList<String> arrayData = new ArrayList<String>();
+    private String ID, PW, checkPW, name, BIRTHDAY;
+    private String team = "";
+    private String log_name="No";
+    private String gender = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-
+        findviewlist();
+        onclicklist();
         initObject();
+
         mAuth = FirebaseAuth.getInstance();
 
         InitializeListener();
         InitializeView();
     }
 
-    public void initObject(){
-        btn_Insert = (Button) findViewById(R.id.btn_insert);
-        btn_Insert.setOnClickListener(this);
-        Check_Name = (Button) findViewById(R.id.check_name);
-        Check_Name.setOnClickListener(this);
-        Btn_Birth = (Button)findViewById(R.id.btn_birth);
-        Btn_Birth.setOnClickListener(this);
-        edit_ID = (EditText) findViewById(R.id.edit_id);
-        edit_PW = (EditText) findViewById(R.id.edit_pw);
-        PW_Check = (EditText)findViewById(R.id.pw_check);
-        edit_Name = (EditText) findViewById(R.id.edit_name);
-        mETBirthday = (EditText) findViewById(R.id.birthday);
-        check_Man = (CheckBox) findViewById(R.id.check_man);
-        check_Man.setOnClickListener(this);
-        check_Woman = (CheckBox) findViewById(R.id.check_woman);
-        check_Woman.setOnClickListener(this);
-        btn_Insert.setEnabled(true);
-        edit_PW.setTransformationMethod(PasswordTransformationMethod.getInstance());
-        PW_Check.setTransformationMethod(PasswordTransformationMethod.getInstance());
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_insert:
+                ID = edit_ID.getText().toString().trim();
+                PW = edit_PW.getText().toString().trim();
+                checkPW = edit_PW_Check.getText().toString().trim();
+                //name = edit_Name.getText().toString().trim();
+                BIRTHDAY = edit_Birthday.getText().toString().trim();
+                createAccount();
+                edit_ID.requestFocus();
+                edit_ID.setCursorVisible(true);
+                break;
+
+            case R.id.check_name:
+                name = edit_Name.getText().toString().trim();
+                log_name = "Yes";
+                getdata();
+                break;
+
+            case R.id.check_man:
+                check_Woman.setChecked(false);
+                gender = "Man";
+                break;
+
+            case R.id.check_woman:
+                check_Man.setChecked(false);
+                gender = "Woman";
+                break;
+
+            case R.id.btn_login:
+                Intent intent = new Intent(this,Login.class);
+                startActivity(intent);
+                break;
+
+            case R.id.btn_birth:
+                InitializeView();
+                InitializeListener();
+                DatePickerDialog dialog = new DatePickerDialog(this,callbackMethod,2020,1,12);
+                dialog.show();
+                break;
+        }
     }
 
-    public void setInsertMode() {
+    private void findviewlist() {
+        btn_Insert = (Button) findViewById(R.id.btn_insert);
+        btn_Check_Name = (Button) findViewById(R.id.check_name);
+        btn_Birth = (Button)findViewById(R.id.btn_birth);
+        edit_ID = (EditText) findViewById(R.id.edit_id);
+        edit_PW = (EditText) findViewById(R.id.edit_pw);
+        edit_PW_Check = (EditText)findViewById(R.id.pw_check);
+        edit_Name = (EditText) findViewById(R.id.edit_name);
+        edit_Birthday = (EditText) findViewById(R.id.birthday);
+        check_Man = (CheckBox) findViewById(R.id.check_man);
+        check_Woman = (CheckBox) findViewById(R.id.check_woman);
+    }
+
+    private void onclicklist() {
+        btn_Insert.setOnClickListener(this);
+        btn_Check_Name.setOnClickListener(this);
+        btn_Birth.setOnClickListener(this);
+        check_Man.setOnClickListener(this);
+        check_Woman.setOnClickListener(this);
+    }
+
+    private void initObject(){
+        btn_Insert.setEnabled(true);
+        edit_PW.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        edit_PW_Check.setTransformationMethod(PasswordTransformationMethod.getInstance());
+    }
+
+    private void setInsertMode() {
         edit_ID.setText("");
         edit_PW.setText("");
         edit_Name.setText("");
@@ -114,16 +144,14 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         check_Man.setChecked(false);
         check_Woman.setChecked(false);
         btn_Insert.setEnabled(true);
-
     }
 
-    //생일선택달력
     private void InitializeListener() {
         callbackMethod = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 monthOfYear = monthOfYear+1;
-                mETBirthday.setText(year + "년"+monthOfYear+"월"+dayOfMonth+"일");
+                edit_Birthday.setText(year + "년"+monthOfYear+"월"+dayOfMonth+"일");
             }
         };
     }
@@ -132,14 +160,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         birthday = (TextView)findViewById(R.id.birthday);
     }
 
- /*   public boolean IsExistID() {
-        boolean IsExist = arrayIndex.contains(name);
-        return IsExist;
-    }*/
-
-
-    public void getdata() {
-        // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+    private void getdata() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseRef = database.getReference("Schedule_Share");
         databaseRef.child("id_list").addValueEventListener(new ValueEventListener() {
@@ -150,9 +171,9 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                     String strname = (String) fileSnapshot.child("name").getValue();
                     Log.v("TAG: value is ", strname);
                     if(strname.equals(name)){
-                       startToast("동일한 이름이 있습니다.");
-                       log_name = "No";
-                   }
+                        startToast("동일한 이름이 있습니다.");
+                        log_name = "No";
+                    }
                 }
             }
             @Override
@@ -162,7 +183,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         });
     }
 
-    public void postDatabase(boolean add) {
+    private void postDatabase(boolean add) {
         mPostReference = FirebaseDatabase.getInstance().getReference();
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
@@ -174,25 +195,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         mPostReference.updateChildren(childUpdates);
     }
 
-
-
-
-/*
-    public String setTextLength(String text, int length) {
-        if (text.length() < length) {
-            int gap = length - text.length();
-            for (int i = 0; i < gap; i++) {
-                text = text + " ";
-            }
-        }
-        return text;
-    }*/
-
-
-
-
     private void createAccount() {
-        // [START create_user_with_email]
         String email = ID;
         String password = PW;
 
@@ -231,71 +234,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-
     private void startToast(String msg){
         Toast.makeText(SignUp.this, msg, Toast.LENGTH_SHORT).show();
     }
-
- /*   public void createDatabase(){
-        if (!IsExistID()) {
-            postFirebaseDatabase(true);
-            setInsertMode();
-            Intent intent = new Intent(this,MainActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
-            Toast.makeText(SignUp.this, "이미 존재하는 이름 입니다. 다른 이름으로 설정해주세요.", Toast.LENGTH_LONG).show();
-        }
-        edit_ID.requestFocus();
-        edit_ID.setCursorVisible(true);
-    }
-
-*/
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_insert:
-                ID = edit_ID.getText().toString().trim();
-                PW = edit_PW.getText().toString().trim();
-                checkPW = PW_Check.getText().toString().trim();
-                //name = edit_Name.getText().toString().trim();
-                BIRTHDAY = mETBirthday.getText().toString().trim();
-                createAccount();
-                edit_ID.requestFocus();
-                edit_ID.setCursorVisible(true);
-                break;
-
-            case R.id.check_name:
-                name = edit_Name.getText().toString().trim();
-                log_name = "Yes";
-                getdata();
-                break;
-
-            case R.id.check_man:
-                check_Woman.setChecked(false);
-                gender = "Man";
-                break;
-
-            case R.id.check_woman:
-                check_Man.setChecked(false);
-                gender = "Woman";
-                break;
-
-            case R.id.btn_login:
-                Intent intent = new Intent(this,Login.class);
-                startActivity(intent);
-                break;
-
-            case R.id.btn_birth:
-                InitializeView();
-                InitializeListener();
-                DatePickerDialog dialog = new DatePickerDialog(this,callbackMethod,2020,1,12);
-                dialog.show();
-                break;
-        }
-    }
-
-
 }

@@ -9,43 +9,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.firebase.database.DatabaseReference;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private DatabaseReference mPostReference;
-
-    Button Btn_Signup, Btn_Login;
-    EditText UserID, UserPW;
-    public String userID, userPW;
+    private Button Btn_Signup, Btn_Login;
+    private EditText Et_userID, Et_userPW;
+    public String str_userID, str_userPW;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        initView();
-
-
-
+        findviewlist();
+        onclicklist();
     }
 
-    private void initView() {
-        Btn_Signup = findViewById(R.id.btn_signup);
-        Btn_Signup.setOnClickListener(this);
-        Btn_Login = findViewById(R.id.btn_login);
-        Btn_Login.setOnClickListener(this);
-        UserID = (EditText) findViewById(R.id.userid);
-        UserPW = (EditText) findViewById(R.id.userpw);
-
-    }
-
-    public void setInsertMode() {
-        UserID.setText("");
-        UserPW.setText("");;
-    }
     @Override
     public void onClick(View view) {
-
         switch (view.getId()){
             case R.id.btn_signup :
                 Intent intent1 = new Intent(this,SignUp.class);
@@ -53,16 +32,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btn_login:
-                userID = UserID.getText().toString();
-                userPW = UserPW.getText().toString();
+                str_userID = Et_userID.getText().toString();
+                str_userPW = Et_userPW.getText().toString();
                 //setInsertMode();
                 Intent intent2 = new Intent(this,Login.class);
-                intent2.putExtra("userID",userID);
-                intent2.putExtra("userPW",userPW);
+                intent2.putExtra("userID", str_userID);
+                intent2.putExtra("userPW",str_userPW);
                 startActivity(intent2);
-
-
         }
+    }
 
+    private void findviewlist() {
+        Btn_Signup = findViewById(R.id.btn_signup);
+        Btn_Login = findViewById(R.id.btn_login);
+        Et_userID = findViewById(R.id.userid);
+        Et_userPW = findViewById(R.id.userpw);
+    }
+
+    private void onclicklist(){
+        Btn_Signup.setOnClickListener(this);
+        Btn_Login.setOnClickListener(this);
     }
 }

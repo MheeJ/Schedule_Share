@@ -24,7 +24,7 @@ public class Add_User extends AppCompatActivity implements View.OnClickListener{
     private ArrayAdapter<String> adapter;
     private ListView listView;
     private Button Btn_serch,Btn_UserAdd,Btn_UserDelete,Btn_Finish;
-    private EditText ed;
+    private EditText Et_newitem;
     private String text = "";
     private String searchID = "no";
     private String adapter_list ="";
@@ -52,7 +52,7 @@ public class Add_User extends AppCompatActivity implements View.OnClickListener{
         if(searchID.equals("yes")) {
             if (!text.isEmpty()) {                        // 입력된 text 문자열이 비어있지 않으면
                 items.add(text);                          // items 리스트에 입력된 문자열 추가
-                ed.setText("");                           // EditText 입력란 초기화
+                Et_newitem.setText("");                           // EditText 입력란 초기화
                 adapter.notifyDataSetChanged();// 리스트 목록 갱신
                 searchID ="no";
                 adapter_list = String.join(",",items);
@@ -105,7 +105,7 @@ public class Add_User extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_search:
-                text = ed.getText().toString();
+                text = Et_newitem.getText().toString();
                 Search_ID();
                 break;
             case R.id.btn_userAdd:
@@ -126,7 +126,7 @@ public class Add_User extends AppCompatActivity implements View.OnClickListener{
 
     private void findviewlist(){
         Btn_serch= findViewById(R.id.btn_search);
-        ed = findViewById(R.id.newitem);
+        Et_newitem = findViewById(R.id.newitem);
         Btn_UserAdd = findViewById(R.id.btn_userAdd);
         Btn_UserDelete = findViewById(R.id.btn_userDelete);
         Btn_Finish = findViewById(R.id.btn_finish);

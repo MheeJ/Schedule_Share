@@ -6,27 +6,12 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by DowonYoon on 2017-07-11.
- */
 @IgnoreExtraProperties
-class FirebasePost {
-    public String id;
-    public String pw;
-    public String name;
-    public String birth;
-    public String gender;
-    public String project_name;
-    public String project_info;
-    public Long project_date;
-    public String project_member;
-    public String project_notice;
-    public String schedule;
-    public String team;
-
+public class FirebasePost {
+    private String id,pw, name,birth, gender,project_name, project_info,project_member, project_notice, team;
+    private Long project_date;
 
     public FirebasePost(){
-        // Default constructor required for calls to DataSnapshot.getValue(FirebasePost.class)
     }
 
     public FirebasePost(String id, String pw, String name, String birth, String gender, String team) {
@@ -44,10 +29,6 @@ class FirebasePost {
         this.project_date = project_date;
         this.project_member = project_member;
         this.project_notice = project_notice;
-    }
-
-    public FirebasePost(String notice) {
-        this.schedule = notice;
     }
 
     @Exclude

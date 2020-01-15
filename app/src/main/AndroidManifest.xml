@@ -19,9 +19,9 @@
         <activity android:name=".Login"/>
         <activity android:name=".SignUp"/>
         <activity android:name=".Project_list"/>
-        <activity android:name=".Make_project"/>
-        <activity android:name=".Project_main"/>
-        <activity android:name=".Project_week"/>
+        <activity android:name=".Project_add"/>
+        <activity android:name=".Schedule_list"/>
+        <activity android:name=".Schedule_week"/>
         <activity android:name=".Schedule_add"/>
         <activity android:name=".Add_User"/>
         <activity android:name="Project_Notice"/>

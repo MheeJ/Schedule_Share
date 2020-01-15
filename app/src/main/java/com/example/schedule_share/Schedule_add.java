@@ -31,11 +31,11 @@ public class Schedule_add extends AppCompatActivity implements View.OnClickListe
 
         set();
 
-        Intent intent8 = getIntent();
-        String data = intent8.getStringExtra("data");
-        project_name = intent8.getStringExtra("project_name");
+        Intent intent = getIntent();
+        String data = intent.getStringExtra("data");
+        project_name = intent.getStringExtra("project_name");
         et_write_schedule.setText(data);
-        week = intent8.getIntExtra("schedule_week",0);
+        week = intent.getIntExtra("schedule_week",0);
     }
 
     private void set() {
@@ -46,10 +46,10 @@ public class Schedule_add extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Intent intent7 = new Intent();
-        intent7.putExtra("result","Close Popup");
-        setResult(RESULT_OK,intent7);
+        Intent intent = new Intent();
+        intent.putExtra("result","Close Popup");
         postFirebaseDatabase(true);
+        setResult(1,intent);
         finish();
     }
 

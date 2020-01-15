@@ -50,6 +50,18 @@ public class Schedule_week extends AppCompatActivity implements View.OnClickList
         project_name = intent.getStringExtra("project_name");
         tv_week.setText(week +"주차");
 
+        firebasedatabase();
+
+        adapter = new ScheduleAdapter(arrayList);
+        recyclerView.setAdapter(adapter);
+    }
+    private void Map(){
+        for(int k = 0;k<arrayList.size();k++) {
+            result.put("schedule"+(k+1),arrayList.get(k));
+            int a = 0;
+        }
+    }
+    private void firebasedatabase(){
         database = FirebaseDatabase.getInstance();
 
         databaseReference = database.getReference("Schedule_Share").child("project_list").child(project_name).child(week +"주차");
@@ -61,6 +73,7 @@ public class Schedule_week extends AppCompatActivity implements View.OnClickList
                     String schedule_info = snapshot.getValue().toString();
                     arrayList.add(schedule_info);
                 }
+                Map();
                 adapter.notifyDataSetChanged();
             }
             @Override
@@ -68,8 +81,6 @@ public class Schedule_week extends AppCompatActivity implements View.OnClickList
                 Log.e("MainActivity", String.valueOf(databaseError.toException()));
             }
         });
-        adapter = new ScheduleAdapter(arrayList);
-        recyclerView.setAdapter(adapter);
     }
 
     private void set() {
@@ -84,25 +95,24 @@ public class Schedule_week extends AppCompatActivity implements View.OnClickList
         Intent addintent = new Intent(this,Schedule_add.class);
         addintent.putExtra("schedule_week", week);
         addintent.putExtra("project_name",project_name);
-        startActivity(addintent);
+        startActivityForResult(addintent, 1);
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
-                String result = data.getStringExtra("result");
-
+//        if (requestCode == 1) {
+            if (resultCode == 1) {
+                firebasedatabase();
             }
-        }
+//        }
     }
 
     @Override
     public void onBackPressed(){
-        Schedule_week.i = 0;
-        Schedule_week.result = new HashMap<>();
+        i = 0;
+        result = new HashMap<>();
         super.onBackPressed();
         return;
     }
